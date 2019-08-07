@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:playground/ui/widgets/animated_toggle.dart';
 
+import '../widgets/swipeable.dart';
+
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key, this.title}) : super(key: key);
   final String title;
@@ -27,16 +29,22 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Center(
         child: Container(
           height: 150,
-          child: AnimatedToggle(
-            isToggled: _isFavorited,
+          child: Swipeable(
+            background: AnimatedToggle(
+              isToggled: _isFavorited,
+            ),
+            child: Container(
+              color: Colors.white,
+              child: Center(
+                child: Text("Swipe Me :D"),
+              ),
+            ),
+            onSwiped: _toggleFavorites,
+            direction: SwipeDirection.startToEnd,
+            swipeThreshold: 0.6,
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _toggleFavorites,
-        tooltip: 'Toggle',
-        child: Icon(_isFavorited ? Icons.favorite : Icons.favorite_border),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      ),// This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

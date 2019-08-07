@@ -2,7 +2,7 @@ import 'dart:math' as math;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
 
-const double _kDismissThreshold = 0.4;
+const double _kDefaultSwipeThreshold = 0.4;
 
 /// The direction in which a [Dismissible] can be dismissed.
 enum SwipeDirection {
@@ -22,7 +22,7 @@ class Swipeable extends StatefulWidget {
     this.background,
     this.onSwiped,
     this.direction = SwipeDirection.startToEnd,
-    this.swipeThresholds = const <SwipeDirection, double>{},
+    this.swipeThreshold = _kDefaultSwipeThreshold,
     this.movementDuration = const Duration(milliseconds: 200),
     this.crossAxisEndOffset = 0.0,
     this.dragStartBehavior = DragStartBehavior.start,
@@ -53,13 +53,7 @@ class Swipeable extends StatefulWidget {
   /// has to be dragged at least 40% towards one direction to be considered
   /// swiped. Clients can define different thresholds for each swipe
   /// direction.
-  ///
-  ///
-  /// See also [direction], which controls the directions in which the items can
-  /// be swiped. Setting a threshold of 1.0 (or greater) prevents a drag in
-  /// the given [DismissDirection] even if it would be allowed by the
-  /// [direction] property.
-  final Map<SwipeDirection, double> swipeThresholds;
+  final double swipeThreshold;
 
   /// Defines the duration for card to dismiss or to come back to original position.
   final Duration movementDuration;
@@ -213,8 +207,8 @@ class _SwipeableState extends State<Swipeable> with TickerProviderStateMixin, Au
     if (!_moveController.isAnimating) {
       var position = _dragExtent.abs() / _overallDragAxisExtent;
 
-      if (position >= _kDismissThreshold) {
-        final movePastThresholdPixels = _kDismissThreshold * _overallDragAxisExtent;
+      if (position >= widget.swipeThreshold) {
+        final movePastThresholdPixels = widget.swipeThreshold * _overallDragAxisExtent;
 
         // how many "thresholds" past the threshold we are.
         var n = _dragExtent.abs() / movePastThresholdPixels;
