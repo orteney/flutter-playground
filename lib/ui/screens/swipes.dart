@@ -24,11 +24,12 @@ class _SwipesScreenState extends State<SwipesScreen> {
       appBar: AppBar(
         title: Text("Swipes Room"),
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.grey,
       body: ListView.separated(
         itemCount: items.length,
         itemBuilder: (context, index) => listItem(context, index),
         separatorBuilder: (context, index) => Divider(
+          color: Colors.transparent,
           height: 1,
         ),
       ), // This trailing comma makes auto-formatting nicer for build methods.
@@ -40,17 +41,27 @@ class _SwipesScreenState extends State<SwipesScreen> {
       height: 150,
       child: Swipeable(
         background: AnimatedToggle(
+          duration: Duration(milliseconds: 250),
           isToggled: items[position],
         ),
         child: Container(
-          color: Colors.white70,
+          color: Colors.white,
           child: Center(
-            child: Text("Swipe Me :D"),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text("Swipe Me :D"),
+                FlatButton(
+                  child: Text("Click Me :D"),
+                  onPressed: () => _toggleFavorites(position),
+                )
+              ],
+            ),
           ),
         ),
         onSwiped: () => _toggleFavorites(position),
         direction: SwipeDirection.startToEnd,
-        swipeThreshold: 0.6,
+        swipeThreshold: 0.5,
       ),
     );
   }

@@ -1,61 +1,104 @@
 import 'package:flutter/material.dart';
 import 'package:playground/ui/clippers/circular_reveal_clipper.dart';
 
-class AnimatedToggle extends ImplicitlyAnimatedWidget {
+class AnimatedToggle extends StatefulWidget {
   AnimatedToggle({
     Key key,
     @required this.isToggled,
-  }) : super(
-          key: key,
-          duration: Duration(milliseconds: 250),
-        );
+    @required this.duration,
+  }) : super(key: key);
 
   final bool isToggled;
+  final Duration duration;
 
   _AnimatedToggleState createState() => _AnimatedToggleState();
 }
 
-class _AnimatedToggleState extends AnimatedWidgetBaseState<AnimatedToggle> {
-  Tween<double> _animationTween;
+class _AnimatedToggleState extends State<AnimatedToggle> with SingleTickerProviderStateMixin<AnimatedToggle> {
+  AnimationController _controller;
+
+  CurvedAnimation _backgroundAnimation;
 
   @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.grey,
-      child: Stack(
-        alignment: Alignment.centerLeft,
-        children: [
-          ClipPath(
-            clipper: CircularRevealClipper(
-              fraction: calcClipperFraction(),
-              xOffset: 44,
-            ),
-            child: Container(color: const Color(0xFF0058AC)),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 32),
-            child: Icon(
-              Icons.flag,
-              color: Colors.white,
-              size: 24,
-            ),
-          )
-        ],
-      ),
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: widget.duration,
+      vsync: this,
+      value: widget.isToggled ? 1 : 0,
+    );
+
+    _backgroundAnimation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeInOutQuart,
     );
   }
 
-  double calcIconSize() {
-    return Curves.elasticOut.transform(_animationTween?.evaluate(animation) ?? 1) * 36;
-  }
+  @override
+  void didUpdateWidget(AnimatedToggle oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    _controller.duration = widget.duration;
 
-  double calcClipperFraction() {
-    return Curves.easeInOutQuart.transform(_animationTween?.evaluate(animation) ?? 0);
+    if (widget.isToggled != oldWidget.isToggled) {
+      if (widget.isToggled) {
+        _controller.forward();
+      } else {
+        _controller.reverse();
+      }
+    }
   }
 
   @override
-  void forEachTween(visitor) {
-    _animationTween =
-        visitor(_animationTween, widget.isToggled ? 1.0 : 0.0, (dynamic value) => Tween<double>(begin: value));
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      alignment: Alignment.centerLeft,
+      children: [
+        CircularAnimatedWidget(
+          animation: _backgroundAnimation,
+          xOffset: 50,
+          child: Container(color: const Color(0xFF0058AC)),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 32),
+          child: AnimatedIcon(
+            icon: AnimatedIcons.add_event,
+            color: Colors.white,
+            size: 36,
+            progress: _controller,
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class CircularAnimatedWidget extends AnimatedWidget {
+  CircularAnimatedWidget({
+    this.child,
+    this.animation,
+    this.xOffset,
+    this.yOffset,
+  }) : super(listenable: animation);
+
+  final Widget child;
+  final Animation<double> animation;
+  final double xOffset;
+  final double yOffset;
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipPath(
+      clipper: CircularRevealClipper(
+        fraction: animation.value,
+        xOffset: xOffset,
+      ),
+      child: child,
+    );
   }
 }
