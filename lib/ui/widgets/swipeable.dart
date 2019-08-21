@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'package:flutter/services.dart' show HapticFeedback;
 import 'package:flutter/gestures.dart';
 import 'package:flutter/widgets.dart';
 
@@ -26,6 +27,7 @@ class Swipeable extends StatefulWidget {
     this.movementDuration = const Duration(milliseconds: 200),
     this.crossAxisEndOffset = 0.0,
     this.dragStartBehavior = DragStartBehavior.start,
+    this.hasHapticFeedback = true,
   })  : assert(background != null),
         assert(dragStartBehavior != null),
         super(key: key);
@@ -80,6 +82,9 @@ class Swipeable extends StatefulWidget {
   ///
   ///  * [DragGestureRecognizer.dragStartBehavior], which gives an example for the different behaviors.
   final DragStartBehavior dragStartBehavior;
+
+  /// Whether the swipe should has haptic feedback.
+  final bool hasHapticFeedback;
 
   @override
   _SwipeableState createState() => _SwipeableState();
@@ -220,11 +225,7 @@ class _SwipeableState extends State<Swipeable> with TickerProviderStateMixin, Au
         position = adjustedPixelPos / _overallDragAxisExtent;
 
         if (!_pastThreshold) {
-          _pastThreshold = true;
-
-          if (widget.onSwiped != null) {
-            widget.onSwiped();
-          }
+          _onPastThreshold();
         }
       }
 
@@ -240,6 +241,18 @@ class _SwipeableState extends State<Swipeable> with TickerProviderStateMixin, Au
         end: Offset(end, widget.crossAxisEndOffset),
       ),
     );
+  }
+
+  void _onPastThreshold() {
+    _pastThreshold = true;
+
+    if (widget.onSwiped != null) {
+      widget.onSwiped();
+
+      if (widget.hasHapticFeedback) {
+        HapticFeedback.mediumImpact();
+      }
+    }
   }
 
   Future<void> _handleDragEnd(DragEndDetails details) async {
