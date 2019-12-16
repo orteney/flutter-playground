@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:playground/ui/screens/swipes.dart';
+import 'package:playground/ui/routes.dart';
+import 'package:playground/ui/widgets/menu_item.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key key}) : super(key: key);
@@ -10,26 +11,10 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(title: Text("Playground")),
       body: ListView(
         children: [
-          Padding(
-            padding: EdgeInsets.all(16),
-            child: OutlineButton(
-              child: Text("Swipes Room"),
-              onPressed: () => navigateToSwipes(context) ,
-            ),
-          )
+          MenuItem(text: "Swipes Room", route: Routes.SWIPES),
+          MenuItem(text: "Cards Room", route: Routes.CARDS),
         ],
       ),
-    );
-  }
-
-  void navigateToSwipes(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (BuildContext context) {
-          return SwipesScreen();
-        }
-      )
     );
   }
 }
