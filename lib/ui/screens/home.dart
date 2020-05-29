@@ -11,8 +11,9 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(title: Text("Playground")),
       body: ListView(
         children: [
-          MenuItem(text: "Swipes Room", route: Routes.SWIPES),
-          MenuItem(text: "Cards Room", route: Routes.CARDS),
+          MenuItem(text: "Swipes Room", route: Routes.swipes),
+          MenuItem(text: "Cards Room", route: Routes.cards),
+          MenuItem(text: "Nested Navigator", route: Routes.nestedNavigator),
         ],
       ),
     );

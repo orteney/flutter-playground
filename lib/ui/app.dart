@@ -13,8 +13,9 @@ class App extends StatelessWidget {
       darkTheme: ThemeData.from(colorScheme: _darkColorScheme),
       home: HomeScreen(),
       routes: {
-        Routes.SWIPES: (context) => SwipesScreen(),
-        Routes.CARDS: (context) => CardsScreen(),
+        Routes.swipes: (context) => SwipesScreen(),
+        Routes.cards: (context) => CardsScreen(),
+        Routes.nestedNavigator: (context) => NestedNavigatorScreen(),
       },
     );
   }
