@@ -68,7 +68,6 @@ class _AnimatedToggleState extends State<AnimatedToggle> with SingleTickerProvid
           padding: const EdgeInsets.only(left: 32),
           child: AnimatedIcon(
             icon: AnimatedIcons.add_event,
-            color: Colors.white,
             size: 36,
             progress: _controller,
           ),

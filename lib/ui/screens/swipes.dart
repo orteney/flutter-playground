@@ -9,8 +9,7 @@ class SwipesScreen extends StatefulWidget {
 }
 
 class _SwipesScreenState extends State<SwipesScreen> {
-  
-  final items = List<bool>.from([false, false, false, false, false,false,false]);
+  final items = List<bool>.from([false, false, false, false, false, false, false]);
 
   void _toggleFavorites(int index) {
     setState(() {
@@ -24,7 +23,6 @@ class _SwipesScreenState extends State<SwipesScreen> {
       appBar: AppBar(
         title: Text("Swipes Room"),
       ),
-      backgroundColor: Colors.grey,
       body: ListView.separated(
         itemCount: items.length,
         itemBuilder: (context, index) => listItem(context, index),
@@ -44,8 +42,8 @@ class _SwipesScreenState extends State<SwipesScreen> {
           duration: Duration(milliseconds: 250),
           isToggled: items[position],
         ),
-        child: Container(
-          color: Colors.white,
+        child: Material(
+          elevation: 1,
           child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

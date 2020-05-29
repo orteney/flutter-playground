@@ -32,7 +32,7 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
               SliverAppBar(
                 backgroundColor: backgroundColor,
                 pinned: true,
-                iconTheme: theme.primaryIconTheme.copyWith(color: Colors.black54),
+                iconTheme: theme.primaryIconTheme,
               ),
               SliverToBoxAdapter(
                 child: Padding(
@@ -42,14 +42,14 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
                     children: <Widget>[
                       Text(
                         'ООО "Агро-Сбыт"',
-                        style: theme.textTheme.subhead.copyWith(color: theme.accentColor),
+                        style: theme.textTheme.subtitle1.copyWith(color: theme.accentColor),
                       ),
                       const SizedBox(height: 4),
                       Row(
                         children: <Widget>[
                           Text(
                             'Дмитрий Фукалов',
-                            style: theme.textTheme.caption.copyWith(color: Colors.black87),
+                            style: theme.textTheme.caption,
                           ),
                           const SizedBox(width: 8),
                           Text(
@@ -61,7 +61,7 @@ class _CardDetailsScreenState extends State<CardDetailsScreen> {
                       const SizedBox(height: 16),
                       Text(
                         'Добрый день! В связи с небольшой поломкой и поздней загузкой, произошла задержка в сроках доставки груза. Авомобиль на выгрузке будет 20.10.2018',
-                        style: theme.textTheme.body1.copyWith(color: Colors.black54),
+                        style: theme.textTheme.bodyText2,
                       ),
                     ],
                   ),

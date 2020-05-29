@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:playground/ui/routes.dart';
+
+import 'card_details.dart';
 
 class CardsScreen extends StatelessWidget {
   const CardsScreen({Key key}) : super(key: key);
@@ -46,15 +47,15 @@ class _CardWidget extends StatelessWidget {
               children: <Widget>[
                 Text(
                   'ООО "Агро-Сбыт"',
-                  style: theme.textTheme.subhead.copyWith(color: theme.accentColor),
+                  style: theme.textTheme.subtitle1.copyWith(color: theme.accentColor),
                 ),
                 const SizedBox(height: 4),
-                Wrap(                  
+                Wrap(
                   spacing: 8,
                   children: <Widget>[
                     Text(
                       'Дмитрий Фукалов',
-                      style: theme.textTheme.caption.copyWith(color: Colors.black87),
+                      style: theme.textTheme.caption,
                     ),
                     Text(
                       '14 ноя 12:01',
@@ -65,14 +66,19 @@ class _CardWidget extends StatelessWidget {
                 const SizedBox(height: 16),
                 Text(
                   'Добрый день! В связи с небольшой поломкой и поздней загузкой, произошла задержка в сроках доставки груза. Авомобиль на выгрузке будет 20.10.2018',
-                  style: theme.textTheme.body1.copyWith(color: Colors.black54),
+                  style: theme.textTheme.bodyText2,
                 ),
               ],
             ),
           ),
-          onTap: () {
-            Navigator.pushNamed(context, Routes.CARD_DETAILS, arguments: id);
-          },
+          onTap: () => Navigator.of(context).push(
+            MaterialPageRoute(
+              fullscreenDialog: true,
+              builder: (context) {
+                return CardDetailsScreen(id: id);
+              },
+            ),
+          ),
         ),
       ),
     );
