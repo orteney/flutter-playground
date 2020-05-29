@@ -13,6 +13,7 @@ class HomeScreen extends StatelessWidget {
         children: [
           MenuItem(text: "Swipes Room", route: Routes.swipes),
           MenuItem(text: "Cards Room", route: Routes.cards),
+          MenuItem(text: "Sliver Pull To Refres", route: Routes.sliverPullToRefresh),
           MenuItem(text: "Nested Navigator", route: Routes.nestedNavigator),
         ],
       ),
