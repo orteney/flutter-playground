@@ -15,6 +15,7 @@ class HomeScreen extends StatelessWidget {
           MenuItem(text: "Cards Room", route: Routes.cards),
           MenuItem(text: "Sliver Pull To Refres", route: Routes.sliverPullToRefresh),
           MenuItem(text: "Nested Navigator", route: Routes.nestedNavigator),
+          MenuItem(text: "Animated List Room", route: Routes.animatedList),
         ],
       ),
     );

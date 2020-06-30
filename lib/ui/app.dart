@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:playground/ui/routes.dart';
+import 'package:playground/ui/screens/animated_list/animated_list_screen.dart';
 import 'package:playground/ui/screens/cardtansition/cards.dart';
 import 'package:playground/ui/screens/complex_pull_to_refresh/pull_to_refersh.dart';
 import 'package:playground/ui/screens/home.dart';
@@ -19,6 +20,7 @@ class App extends StatelessWidget {
         Routes.cards: (context) => CardsScreen(),
         Routes.sliverPullToRefresh: (context) => SliverPullToRefresh(),
         Routes.nestedNavigator: (context) => NestedNavigatorScreen(),
+        Routes.animatedList: (context) => AnimatedListScreen(),
       },
     );
   }
