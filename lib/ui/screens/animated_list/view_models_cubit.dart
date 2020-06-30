@@ -38,7 +38,7 @@ class ViewModelsCubit extends Cubit<List<ViewModel>> {
     );
 
     final newList = state.toList();
-    newList.add(newModel);
+    newList.insert(2, newModel);
     emit(newList);
   }
 }

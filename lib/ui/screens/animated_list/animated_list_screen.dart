@@ -43,7 +43,7 @@ class _AnimatedListScreenState extends State<AnimatedListScreen> {
         widget: AnimatedStreamListVariant(
           key: PageStorageKey('animated_stream_list'),
           cubit: _cubit,
-          listItemBuilder: _listItemBuilder,
+          listItemBuilder: _animatedListItemBuilder,
         ),
       ),
       _ListVariant(
@@ -52,7 +52,7 @@ class _AnimatedListScreenState extends State<AnimatedListScreen> {
         widget: ImplicitlyReorderableAnimatedListVariant(
           key: PageStorageKey('implicitly_reorderable_animated_list'),
           cubit: _cubit,
-          listItemBuilder: _listItemBuilder,
+          listItemBuilder: _animatedListItemBuilder,
         ),
       ),
       _ListVariant(
@@ -122,6 +122,25 @@ class _AnimatedListScreenState extends State<AnimatedListScreen> {
       body: PageStorage(
         bucket: _pageStorageBucket,
         child: _variants[_currentIndex].widget,
+      ),
+    );
+  }
+
+  Widget _animatedListItemBuilder(BuildContext context, ViewModel item, Animation<double> animation) {
+    final sizeAnimation = Tween(begin: 0.0, end: 1.0).animate(
+      CurvedAnimation(parent: animation, curve: Interval(0, 0.5)),
+    );
+
+    final slideAnimation = Tween(begin: const Offset(1, 0), end: const Offset(0, 0)).animate(
+      CurvedAnimation(parent: animation, curve: Interval(0.5, 1)),
+    );
+
+    return SizeTransition(
+      axis: Axis.vertical,
+      sizeFactor: sizeAnimation,
+      child: SlideTransition(
+        position: slideAnimation,
+        child: _listItemBuilder(context, item),
       ),
     );
   }

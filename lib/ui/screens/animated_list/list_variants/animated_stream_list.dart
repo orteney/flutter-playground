@@ -1,6 +1,6 @@
 import 'package:animated_stream_list/animated_stream_list.dart';
 import 'package:cubit/cubit.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide AnimatedListItemBuilder;
 
 import '../list_item_builder.dart';
 import '../view_model.dart';
@@ -13,7 +13,7 @@ class AnimatedStreamListVariant extends StatelessWidget {
   }) : super(key: key);
 
   final Cubit<List<ViewModel>> cubit;
-  final ListItemBuilder<ViewModel> listItemBuilder;
+  final AnimatedListItemBuilder<ViewModel> listItemBuilder;
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +27,6 @@ class AnimatedStreamListVariant extends StatelessWidget {
   }
 
   Widget _animatedListItemBuilder(ViewModel item, int index, BuildContext context, Animation<double> animation) {
-    return SizeTransition(
-      axis: Axis.vertical,
-      sizeFactor: animation,
-      child: listItemBuilder(context, item),
-    );
+    return listItemBuilder(context, item, animation);
   }
 }
